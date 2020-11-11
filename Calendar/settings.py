@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'app_calendar',
     'app_auth',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +130,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = "lobinsky.gleb@gmail.com"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = "H6cmabc4"
+# from django.core.mail import send_mail
+
+# send_mail('Subject here', 'Here is the message.', 'lobinsky.gleb@gmail.comm',['lobinsky.gleb@gmail.com'],fail_silently=False)

@@ -4,21 +4,25 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-# class Year(models.Model):
-#     year = models.PositiveIntegerField(default=0)
 class Country(models.Model):
     name = models.CharField(max_length=20)
 
-
-class User(AbstractUser):
-    country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
+    def __str__(self):
+        return self.name
 
 
 class Holiday(models.Model):
     title = models.CharField(max_length=50)
-    date = models.DateTimeField()
-    location = models.CharField(max_length=20)
+    date = models.DateField()
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class User(AbstractUser):
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
 
 
 class Event(models.Model):
@@ -27,8 +31,3 @@ class Event(models.Model):
     timedelta = models.DurationField()
     need_remind = models.BooleanField()
 
-# class Reminder(models.Model):
-#     text = models.CharField(max_length=100)
-#     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-
-# Create your models here.

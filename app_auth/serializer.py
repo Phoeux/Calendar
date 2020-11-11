@@ -15,6 +15,8 @@ class UserSerializer(ModelSerializer):
     first_name = serializers.CharField(max_length=50, min_length=4)
     last_name = serializers.CharField(max_length=50, min_length=4)
 
+    user = None
+
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'country', 'password']
@@ -26,4 +28,5 @@ class UserSerializer(ModelSerializer):
         return super().validate(attrs)
 
     def create(self, validated_data):
-        return User.objects.create_user(validated_data)
+        self.user = User.objects.create_user(**validated_data)
+        return self.user

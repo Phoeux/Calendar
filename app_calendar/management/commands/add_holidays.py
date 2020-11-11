@@ -1,16 +1,24 @@
-from bs4 import BeautifulSoup
-from django.core.management.base import BaseCommand
+from django.core.management import BaseCommand
+from ics import Calendar
 import requests
-
-from app_calendar.models import Country
+from tqdm import tqdm
+from app_calendar.models import Holiday, Country
 
 
 class Command(BaseCommand):
+
     def handle(self, *args, **kwargs):
-        url = "https://www.officeholidays.com/countries"
-        res = requests.get(url).text
-        soup = BeautifulSoup(res)
-        arr = [[j.text.strip() for j in i.find_all("a")] for i in soup.find_all("div", {"class": "four omega columns"})]
-        all_arr = arr[0] + arr[1] + arr[2]
-        # print (all_arr)
-        Country.objects.create()
+        for country in tqdm(Country.objects.all()):
+            url = f"https://www.officeholidays.com/ics/ics_country.php?tbl_country={country}"
+            res = requests.get(url).text
+            try:
+                calendar = Calendar(res)
+                whole_cal = calendar.events
+                for added_holidays in whole_cal:
+                    Holiday.objects.create(
+                        title=added_holidays.name,
+                        date=added_holidays.begin.date(),
+                        description=added_holidays.description,
+                        country=Country.objects.get(name=added_holidays.location))
+            except:
+                pass

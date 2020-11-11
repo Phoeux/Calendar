@@ -4,6 +4,12 @@ from rest_framework.serializers import ModelSerializer
 from app_calendar.models import Event, Holiday, Country, User
 
 
+class CountrySerializer(ModelSerializer):
+    class Meta:
+        model = Country
+        fields = '__all__'
+
+
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
@@ -16,13 +22,16 @@ class EventSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class HolidaySerializer(ModelSerializer):
+class HolidaySerializerRead(ModelSerializer):
+    country = CountrySerializer()
+
     class Meta:
         model = Holiday
         fields = '__all__'
 
 
-class CountrySerializer(ModelSerializer):
+class HolidaySerializerWrite(ModelSerializer):
+
     class Meta:
-        model = Country
+        model = Holiday
         fields = '__all__'
