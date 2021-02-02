@@ -140,7 +140,7 @@ EMAIL_HOST_USER = "lobinsky.gleb@gmail.com"
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_PASSWORD = "H6cmabc4"
+EMAIL_HOST_PASSWORD = 'somepassword'
 # from django.core.mail import send_mail
 
 # send_mail('Subject here', 'Here is the message.', 'lobinsky.gleb@gmail.comm',['lobinsky.gleb@gmail.com'],fail_silently=False)
